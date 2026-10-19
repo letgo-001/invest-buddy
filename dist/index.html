@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/enhancements.css" />
 </head>
 <body>
   <div class="shell">
@@ -17,7 +18,7 @@
       <button class="new-thread" id="newThread"><span>＋</span> 新建研究</button>
       <div class="side-label">研究线程</div>
       <nav class="threads">
-        <button class="thread active"><span class="thread-dot running"></span><span><b>宁德时代估值与景气验证</b><small>运行中 · 8 分钟前</small></span></button>
+        <button class="thread active"><span class="thread-dot running"></span><span><b id="activeThreadTitle">示例｜宁德时代估值与景气验证</b><small id="activeThreadMeta">演示运行中 · 8 分钟前</small></span></button>
         <button class="thread"><span class="thread-dot"></span><span><b>红利低波策略复盘</b><small>已完成 · 昨天</small></span></button>
         <button class="thread"><span class="thread-dot waiting"></span><span><b>半导体设备国产化</b><small>等待确认 · 10月15日</small></span></button>
       </nav>
@@ -33,16 +34,17 @@
 
     <main class="workspace">
       <header class="topbar">
-        <div class="crumb"><span>研究台</span><i>/</i><b>宁德时代估值与景气验证</b></div>
+        <div class="crumb"><span>Invest Buddy · 个人投资研究 Agent 工作台</span><i>/</i><b id="crumbTitle">示例研究线程</b></div>
         <div class="top-actions"><button class="icon-btn" id="pauseBtn" title="暂停">Ⅱ</button><button class="outline" id="exportBtn">导出研究包</button></div>
       </header>
 
       <section class="content">
         <div class="hero-row">
           <div>
-            <div class="eyebrow"><span class="pulse"></span> AGENT 正在运行 <span class="run-id">RUN-241018-0912</span></div>
-            <h1>宁德时代的当前估值是否被<br>基本面与行业景气支撑？</h1>
-            <p>对比近 12 个季度的增长、盈利质量与历史估值分位，并交叉验证产业链景气信号。研究截至 2026-10-17。</p>
+            <div class="product-kicker">INVEST BUDDY · PERSONAL RESEARCH AGENT</div>
+            <div class="eyebrow"><span class="demo-pill" id="modePill">内置示例</span><span class="pulse"></span> <span id="runStatus">AGENT 正在运行</span> <span class="run-id" id="runId">RUN-241018-0912</span></div>
+            <h1 id="heroTitle">宁德时代的当前估值是否被<br>基本面与行业景气支撑？</h1>
+            <p id="heroDescription">这是 Invest Buddy 的内置演示线程：对比近 12 个季度的增长、盈利质量与历史估值分位，并交叉验证产业链景气信号。研究截至 2026-10-17。</p>
           </div>
           <div class="health-ring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32"/><circle class="progress" cx="40" cy="40" r="32"/></svg><strong>72%</strong><small>研究进度</small></div>
         </div>
@@ -64,7 +66,8 @@
         <div class="two-col">
           <section class="panel evidence-panel">
             <div class="panel-head"><div><span class="section-kicker">LIVE EVIDENCE</span><h2>已验证证据</h2></div><button class="text-btn" id="evidenceFilter">全部证据 12 ›</button></div>
-            <div class="evidence-list">
+            <div class="demo-disclosure" id="demoDisclosure"><b>演示数据</b> 当前线程用于展示 Agent Harness 完整主链路；金融字段为结构化模拟数据，不代表实时市场事实。</div>
+            <div class="evidence-list" id="evidenceList">
               <article class="evidence"><div class="source-icon fy">扶</div><div><div class="ev-top"><span class="fact">事实</span><time>2026-10-17 · CNY</time><b>置信度 0.98</b></div><h3>近 12 个月归母净利润同比增长 <strong>+18.7%</strong></h3><p>字段：net_profit_parent_ttm ｜ 口径：合并报表 ｜ 单位：亿元</p><button class="citation" data-source="扶摇金融数据 / 财务指标 / 300750.SZ / 截至 2026-09-30 / net_profit_parent_ttm=612.4 亿元">查看原始字段 ↗</button></div></article>
               <article class="evidence"><div class="source-icon if">iF</div><div><div class="ev-top"><span class="signal">信号</span><time>2026-09 · GWh</time><b>置信度 0.91</b></div><h3>国内动力电池装机量连续 4 个月环比上升</h3><p>统计：月度装机量 ｜ 区间：2026-06 至 2026-09 ｜ 未季调</p><button class="citation" data-source="iFinD MCP / 动力电池月度装机 / 2026-06—2026-09 / 行业汇总口径">查看数据切片 ↗</button></div></article>
               <article class="evidence warning"><div class="source-icon web">W</div><div><div class="ev-top"><span class="uncertain">待核</span><time>抓取失败</time><b>已降级</b></div><h3>上游碳酸锂现货价格：原数据源超时</h3><p>未静默填充；已切换至备用来源，结论暂不纳入。</p><button class="citation" data-source="原工具 web.extract 超时 8.0s；已重试 2 次。备用来源待返回，当前不参与结论。">查看降级记录 ↗</button></div></article>
@@ -90,7 +93,7 @@
 
         <section class="panel synthesis">
           <div class="panel-head"><div><span class="section-kicker">DRAFT SYNTHESIS</span><h2>阶段性判断</h2></div><span class="draft">草稿 · 会随证据更新</span></div>
-          <div class="thesis-grid"><article><span class="index">01</span><div><b>基本面支撑 <em>中高</em></b><p>利润增速与现金流质量提供支撑，但需确认海外收入的持续性。</p></div></article><article><span class="index">02</span><div><b>估值位置 <em>中性</em></b><p>Forward PE 位于近五年 56% 分位，尚未呈现极端低估。</p></div></article><article><span class="index">03</span><div><b>关键反证 <em class="amber">待验证</em></b><p>若上游价格反弹侵蚀毛利，或行业装机环比转弱，结论需下调。</p></div></article></div>
+          <div class="thesis-grid" id="thesisGrid"><article><span class="index">01</span><div><b>基本面支撑 <em>中高</em></b><p>利润增速与现金流质量提供支撑，但需确认海外收入的持续性。</p></div></article><article><span class="index">02</span><div><b>估值位置 <em>中性</em></b><p>Forward PE 位于近五年 56% 分位，尚未呈现极端低估。</p></div></article><article><span class="index">03</span><div><b>关键反证 <em class="amber">待验证</em></b><p>若上游价格反弹侵蚀毛利，或行业装机环比转弱，结论需下调。</p></div></article></div>
           <div class="disclaimer">本工作台提供研究辅助，不构成投资建议、收益承诺或确定性涨跌预测。所有推断均需结合原始证据与个人风险承受能力独立判断。</div>
         </section>
 
@@ -104,6 +107,19 @@
 
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="drawer" id="drawer"><div class="drawer-head"><div><span class="section-kicker">CAPABILITY REGISTRY</span><h2>工具注册表</h2></div><button id="closeDrawer">×</button></div><p class="drawer-intro">Agent 只能调用已注册能力；每个工具声明权限、超时、重试与回退策略。</p><div class="tool-list" id="toolList"></div></aside>
+
+  <div class="modal-backdrop" id="researchModalBackdrop">
+    <div class="modal research-modal" role="dialog" aria-modal="true">
+      <div class="research-mark">＋</div><span class="section-kicker">NEW RESEARCH THREAD</span>
+      <h2>给 Agent 一个研究目标</h2>
+      <p>Invest Buddy 会先拆解任务、选择工具和设定停止规则，再进入证据收集。此静态版本演示 Harness 流程，不会生成虚构的实时金融结论。</p>
+      <label class="field-label" for="newGoalInput">研究目标</label>
+      <textarea id="newGoalInput" class="goal-field" rows="4" placeholder="例如：比较宁德时代与比亚迪近三年的盈利质量、现金流和估值水平"></textarea>
+      <div class="quick-goals"><span>试试：</span><button data-goal="比较宁德时代与比亚迪近三年的盈利质量、现金流和估值水平">公司对比</button><button data-goal="研究半导体设备国产化率提升的主要受益环节与关键反证">产业链研究</button><button data-goal="复盘红利低波策略在利率上行阶段的表现与风险">策略复盘</button></div>
+      <div class="scope-note"><span>安全边界</span><b>只读研究 · 不执行交易 · 写入产物前需确认</b></div>
+      <div class="modal-actions"><button class="outline" id="cancelNewResearch">取消</button><button class="approve" id="startResearchBtn">创建线程并规划</button></div>
+    </div>
+  </div>
 
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" role="dialog" aria-modal="true"><div class="approval-mark">!</div><span class="section-kicker">APPROVAL GATE</span><h2>允许生成并持久化研究报告？</h2><p>Agent 将基于当前证据生成可分享报告，并写入“研究产物”。此操作不会执行交易或发送给第三方。</p><div class="permission"><div><span>将执行</span><b>artifact.write</b></div><div><span>影响范围</span><b>当前工作区</b></div><div><span>预计成本</span><b>¥0.12 · 约 8 秒</b></div></div><label class="check"><input type="checkbox" id="rememberApproval"> 本线程后续同类操作不再询问</label><div class="modal-actions"><button class="outline" id="denyApproval">暂不生成</button><button class="approve" id="approveBtn">确认并生成</button></div></div>
